@@ -10,6 +10,8 @@ class segtree
         tree.resize(4*N,0);
         build(0,0,N,data);
     }
+    // segment tree return function for build and update.
+    ll f(ll a, ll b) {return (a+b);}
     // Build Function it takes 4 parameters segmenttree index, starting index of data, last indes of data and data.
     void build(int ind, int left, int right, vector<long long> &data)
     {
@@ -18,7 +20,7 @@ class segtree
         int mid=(left+right)>>1;
         build(2*ind+1,left,mid, data);
         build(2*ind+2,mid+1,right,data);
-        tree[ind]=tree[2*ind+1]+tree[2*ind+2]; // default function addition
+        tree[ind]=f(tree[2*ind+1],tree[2*ind+2]); // return value during build
         return;
     }
     // UPDATE Function it takes 5 parameters segmentree index i, starting of data, end of data, index where we want to modify value in data and value.
@@ -33,7 +35,7 @@ class segtree
         UPDATE(2*i+1,left,mid,ind,val);
         UPDATE(2*i+2,mid+1,right,ind,val);
         //propgate this update to the current node.
-        tree[i]=tree[2*i+1]+tree[2*i+2];
+        tree[i]=f(tree[2*ind+1],tree[2*ind+2]);
         return;
     }
     void update(int ind,int val) {UPDATE(0,0,N,ind,val);}
@@ -50,7 +52,7 @@ class segtree
         ll left_val=QUERY(2*ind+1,ql,qr,sl,mid);
         ll right_val=QUERY(2*ind+2,ql,qr,mid+1,sr);
         // return answer from left and right.
-        return left_val+right_val;
+        return f(left_val,right_val);
     }
     ll query(int left, int right) {return QUERY(0,left,right,0,N);}
 };
