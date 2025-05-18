@@ -7,31 +7,14 @@ vector<int> startp;
 vector<int> endp;
 
 // DFS call function
-void dfs(int root, int par, vector<vector<int>>& tree)
+void dfs(int root, vector<vector<int>>& tree)
 {
     eularT[timep]=1;
     startp[root]=timep;
     timep++;
-    
-    if (tree[root].size()==1) 
-    {
-        eularT[timep]=1;
-        endp[root]=timep;
-        timep++;
-        return;
-    }
-    
-    for (auto &x: tree[root])
-    {
-        if (x!=par)
-        {
-            dfs(x,root,tree);
-            
-        }
-    }
+    for (auto &x: tree[root]) if (startp[x]==-1) dfs(x,tree);
     eularT[timep]=1;
     endp[root]=timep;
     timep++;
     return;
-    
 }
